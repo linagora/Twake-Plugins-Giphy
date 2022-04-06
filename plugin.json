@@ -1,0 +1,31 @@
+{
+    "server": {
+        "entrypoint": "server/index.ts"
+    },
+    "identity": {
+        "name": "Giphy",
+        "code": "giphy",
+        "icon": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRO8piWKnX31jIyYgDVN4UT1Bx_gQ0qNrAftw&usqp=CAU",
+        "description": "Giphy service for Twake",
+        "website": "https://giphy.com/",
+        "compatibility": ["twake"]
+    },
+    "api": {
+        "hooks_url": "/hook"
+    },
+    "access": {
+        "write": [
+            "messages"
+        ]
+    },
+    "display": {
+        "twake": {
+            "version": 1,
+            "chat": {
+                "input": {
+                    "icon": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRO8piWKnX31jIyYgDVN4UT1Bx_gQ0qNrAftw&usqp=CAU"
+                }
+            }
+        }
+    }
+}

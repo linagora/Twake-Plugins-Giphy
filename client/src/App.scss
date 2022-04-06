@@ -1,0 +1,21 @@
+body{
+    border-radius: 8px;
+}
+
+
+.search-bar{
+    height: 32px;
+    border: none !important;
+    background-color: #eeeeee;
+    padding-left: 12px;
+    cursor: pointer;
+    &:hover{
+        background-color: #eeeeee;
+    } 
+    &:focus-visible {
+        outline: none;
+    }
+    
+}
+
+
