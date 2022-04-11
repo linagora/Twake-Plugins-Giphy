@@ -2,8 +2,8 @@ import { Grid } from "@giphy/react-components";
 import { GiphyFetch } from "@giphy/js-fetch-api";
 import { useState } from "react";
 import { Input } from "antd";
-import "./app.scss";
 import ResizeObserver from "react-resize-observer";
+import "./app.scss";
 
 const giphyFetch = new GiphyFetch("0MFSt231AIlYRUpzjNsPdQUZPaVKqBPb");
 const urlParamCommand = new URLSearchParams(window.location.search);
@@ -32,7 +32,7 @@ function GridDemo({ onGifClick }: any) {
           style={{
             display: "flex",
             flexDirection: "row",
-            width: width - 6,
+            width: "100%",
             height: "40px",
             marginBottom: "8px",
             alignItems: "center",
@@ -77,12 +77,12 @@ function GridDemo({ onGifClick }: any) {
               onChange={(e) => setWord(e.target.value)}
               className="search-bar"
               type="text"
-              style={{ width: width - width / 10 }}
+              style={{ width: "100%" }}
               placeholder="Gif name"
             />
           </div>
         </div>
-        <div style={{ flex: 1, overflow: "scroll" }}>
+        <div style={{ flex: 1, overflow: "scroll", borderRadius: 8 }}>
           <Grid
             onGifClick={onGifClick}
             fetchGifs={fetchGifs}
