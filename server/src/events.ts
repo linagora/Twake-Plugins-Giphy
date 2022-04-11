@@ -43,7 +43,7 @@ export const sendGif = async (event: FrontEvent) => {
       title: event.user_name,
       picture: event.user_icon,
     },
-    blocks: sendGifMessage(event.url),
+    blocks: sendGifMessage(event.url, event.name),
     user_id: event.user_id,
     context: { allow_delete: "everyone" },
   };
