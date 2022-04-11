@@ -26,6 +26,7 @@ function GridDemo({ onGifClick }: any) {
           display: "flex",
           height: "100%",
           borderRadius: "8px",
+          marginTop: 8,
         }}
       >
         <div
@@ -68,7 +69,6 @@ function GridDemo({ onGifClick }: any) {
               flex: 1,
               alignItems: "center",
               height: "32px",
-              marginTop: 8,
             }}
           >
             <Input
