@@ -1,26 +1,32 @@
 import express from "express";
 import config from "config";
 import { FrontEvent, HookEvent } from "./types";
-import { askGiff, cancel, sendGiff } from "./events";
+import { askGif, cancel, sendGif } from "./events";
+
+const prefix =
+  "/" +
+  ((config.get("server.prefix") || "") as string).replace(/(^\/|\/$)/g, "");
 
 const app = express();
 app.use(express.json());
-app.use("/front", express.static(__dirname + "/../../client/build"));
+app.use(prefix + "/view", express.static(__dirname + "/../../client/build"));
+
+app.use(prefix + "/assets", express.static(__dirname + "/../assets"));
 
 app.post(config.get("server.prefix") + "/send", async (req, res) => {
   const event = req.body as FrontEvent;
-  res.send(await sendGiff(event));
+  res.send(await sendGif(event));
 });
 
 // Entrypoint for every events comming from Twake
-app.post(config.get("server.prefix") + "/hook", async (req, res) => {
+app.post(prefix + "/hook", async (req, res) => {
   const event = req.body as HookEvent;
 
   if (
     (event.type === "action" && event.name === "open") ||
     (event.type === "action" && event.name === "command")
   ) {
-    return res.send(await askGiff(event));
+    return res.send(await askGif(event));
   } else if (
     event.type === "interactive_message_action" &&
     event.name === "cancel"

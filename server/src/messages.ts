@@ -1,10 +1,16 @@
 import { HookEvent } from "./types";
 import { t } from "./i18n";
+import config from "config";
 
-export const chooseGiff = (
-  user: HookEvent["content"]["user"],
-  context: any
-) => {
+const prefix =
+  "/" +
+  ((config.get("server.prefix") || "") as string).replace(/(^\/|\/$)/g, "");
+
+const origin =
+  "/" +
+  ((config.get("server.origin") || "") as string).replace(/(^\/|\/$)/g, "");
+
+export const chooseGif = (user: HookEvent["content"]["user"], context: any) => {
   const lang = user?.preferences.locale || "";
   return [
     {
@@ -13,17 +19,21 @@ export const chooseGiff = (
         {
           type: "iframe",
           height: "40vh",
-          src: `http://localhost:8003/front?company_id=${
-            context.company_id
-          }&workspace_id=${context.workspace_id}${
-            context.thread_id ? `&thread_id=${context.thread_id}` : ""
-          }&channel_id=${context.channel_id}&user_id=${
-            context.user_id
-          }&user_name=${context.user_name}${
-            context.user_icon ? `&user_icon=${context.user_icon}` : ""
-          }&id=${context.id}&recipient_context_id=${
-            context.recipient_context_id
-          }${context.command ? `&command=${context.command}` : ""}`,
+          src:
+            origin +
+            "/" +
+            prefix +
+            `/view?company_id=${context.company_id}&workspace_id=${
+              context.workspace_id
+            }${
+              context.thread_id ? `&thread_id=${context.thread_id}` : ""
+            }&channel_id=${context.channel_id}&user_id=${
+              context.user_id
+            }&user_name=${context.user_name}${
+              context.user_icon ? `&user_icon=${context.user_icon}` : ""
+            }&id=${context.id}&recipient_context_id=${
+              context.recipient_context_id
+            }${context.command ? `&command=${context.command}` : ""}`,
         },
         { type: "br" },
         {
@@ -37,14 +47,14 @@ export const chooseGiff = (
   ];
 };
 
-export const sendGiffMessage = (url: string) => {
+export const sendGifMessage = (url: string) => {
   return [
     {
       type: "twacode",
       elements: [
         {
           type: "system",
-          content: "Giff url : ",
+          content: "Gif url : ",
         },
         {
           type: "system",

@@ -2,7 +2,7 @@ import { v4 as uuidv4 } from "uuid";
 import fetch from "node-fetch";
 import { HookEvent, FrontEvent } from "./types";
 import { getAccessToken } from "./utils";
-import { chooseGiff, sendGiffMessage } from "./messages";
+import { chooseGif, sendGifMessage } from "./messages";
 import config from "config";
 
 export const cancel = async (event: any) => {
@@ -36,14 +36,14 @@ export const cancel = async (event: any) => {
   });
 };
 
-export const sendGiff = async (event: FrontEvent) => {
+export const sendGif = async (event: FrontEvent) => {
   const msg = {
     subtype: "application",
     override: {
       title: event.user_name,
       picture: event.user_icon,
     },
-    blocks: sendGiffMessage(event.url),
+    blocks: sendGifMessage(event.url),
     user_id: event.user_id,
     context: { allow_delete: "everyone" },
   };
@@ -58,7 +58,7 @@ export const sendGiff = async (event: FrontEvent) => {
   });
 };
 
-export const askGiff = async (event: HookEvent) => {
+export const askGif = async (event: HookEvent) => {
   const context = {
     company_id: event.content.channel.company_id,
     workspace_id: event.content.channel.workspace_id,
@@ -77,7 +77,7 @@ export const askGiff = async (event: HookEvent) => {
 
   const msg = {
     subtype: "application",
-    blocks: chooseGiff(event.content.user, context),
+    blocks: chooseGif(event.content.user, context),
     ephemeral: {
       id: context.id,
       recipient: event.user_id,
