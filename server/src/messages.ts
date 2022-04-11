@@ -6,9 +6,10 @@ const prefix =
   "/" +
   ((config.get("server.prefix") || "") as string).replace(/(^\/|\/$)/g, "");
 
-const origin =
-  "/" +
-  ((config.get("server.origin") || "") as string).replace(/(^\/|\/$)/g, "");
+const origin = ((config.get("server.origin") || "") as string).replace(
+  /(^\/|\/$)/g,
+  ""
+);
 
 export const chooseGif = (user: HookEvent["content"]["user"], context: any) => {
   const lang = user?.preferences.locale || "";
@@ -21,7 +22,6 @@ export const chooseGif = (user: HookEvent["content"]["user"], context: any) => {
           height: "40vh",
           src:
             origin +
-            "/" +
             prefix +
             `/view?company_id=${context.company_id}&workspace_id=${
               context.workspace_id
