@@ -68,6 +68,7 @@ function GridDemo({ onGifClick }: any) {
               flex: 1,
               alignItems: "center",
               height: "32px",
+              marginTop: 8,
             }}
           >
             <Input
@@ -117,6 +118,7 @@ function App() {
           const urlParams = new URLSearchParams(window.location.search);
           const body = {
             url: gif.images.downsized_large.url,
+            name: gif.title,
             company_id: urlParams.get("company_id"),
             workspace_id: urlParams.get("workspace_id"),
             channel_id: urlParams.get("channel_id"),

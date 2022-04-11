@@ -35,7 +35,6 @@ export const chooseGif = (user: HookEvent["content"]["user"], context: any) => {
               context.recipient_context_id
             }${context.command ? `&command=${context.command}` : ""}`,
         },
-        { type: "br" },
         {
           type: "button",
           style: "default",
@@ -47,22 +46,14 @@ export const chooseGif = (user: HookEvent["content"]["user"], context: any) => {
   ];
 };
 
-export const sendGifMessage = (url: string) => {
+export const sendGifMessage = (url: string, name: string) => {
   return [
     {
       type: "twacode",
       elements: [
         {
           type: "system",
-          content: "Gif url : ",
-        },
-        {
-          type: "system",
-          content: {
-            inline: "true",
-            type: "url",
-            content: url,
-          },
+          content: "#" + name,
         },
         { type: "br" },
         {

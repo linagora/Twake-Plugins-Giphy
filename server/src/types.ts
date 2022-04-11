@@ -21,6 +21,7 @@ export type HookEvent = {
 
 export type FrontEvent = {
   url: string;
+  name: string;
   company_id: string;
   workspace_id: string;
   channel_id: string;
