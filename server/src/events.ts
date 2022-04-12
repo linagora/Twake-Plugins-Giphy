@@ -1,7 +1,7 @@
 import { v4 as uuidv4 } from "uuid";
 import fetch from "node-fetch";
 import { HookEvent, FrontEvent } from "./types";
-import { getAccessToken } from "./utils";
+import { getAccessToken, parseJwt } from "./utils";
 import { chooseGif, sendGifMessage } from "./messages";
 import config from "config";
 
@@ -39,13 +39,11 @@ export const cancel = async (event: any) => {
 export const sendGif = async (event: FrontEvent) => {
   const msg = {
     subtype: "application",
-    override: {
-      title: event.user_name,
-      picture: event.user_icon,
-    },
+    application_id: parseJwt(event.token).application_id,
     blocks: sendGifMessage(event.url, event.name),
     user_id: event.user_id,
     context: { allow_delete: "everyone" },
+    text: `sent ${event.name} in the channel`,
   };
 
   cancel(event);
