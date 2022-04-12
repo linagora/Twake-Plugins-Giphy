@@ -6,7 +6,7 @@ export type HookEvent = {
   content: {
     command?: string;
     channel?: any;
-    thread?: any;
+    parent_message?: any;
     message?: any;
     user?: {
       preferences: {

@@ -63,7 +63,9 @@ export const askGif = async (event: HookEvent) => {
     company_id: event.content.channel.company_id,
     workspace_id: event.content.channel.workspace_id,
     channel_id: event.content.channel.id,
-    thread_id: event.content.thread?.id,
+    thread_id: event.content.parent_message
+      ? event.content.parent_message.thread_id
+      : null,
     user_id: event.user_id,
     user_name: [
       event.content.user?.first_name,
@@ -73,6 +75,7 @@ export const askGif = async (event: HookEvent) => {
     id: uuidv4(),
     recipient_context_id: event.connection_id,
     command: event.content?.command,
+    token: await getAccessToken(),
   };
 
   const msg = {
@@ -84,17 +87,17 @@ export const askGif = async (event: HookEvent) => {
       recipient_context_id: context.recipient_context_id,
     },
     context: {
-      company_id: event.content.channel.company_id,
-      workspace_id: event.content.channel.workspace_id,
-      channel_id: event.content.channel.id,
+      company_id: context.company_id,
+      workspace_id: context.workspace_id,
+      channel_id: context.channel_id,
     },
   };
 
   await sendMessage(msg, {
-    company_id: event.content.channel.company_id,
-    workspace_id: event.content.channel.workspace_id,
-    channel_id: event.content.channel.id,
-    thread_id: event.content.thread?.id,
+    company_id: context.company_id,
+    workspace_id: context.workspace_id,
+    channel_id: context.channel_id,
+    thread_id: context.thread_id,
   });
 };
 
