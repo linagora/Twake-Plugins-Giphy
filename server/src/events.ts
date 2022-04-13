@@ -41,9 +41,9 @@ export const sendGif = async (event: FrontEvent) => {
     subtype: "application",
     application_id: parseJwt(event.token).application_id,
     blocks: sendGifMessage(event.url, event.name),
+    text: "sent a gif #" + event.name,
     user_id: event.user_id,
     context: { allow_delete: "everyone" },
-    text: `sent ${event.name} in the channel`,
   };
 
   cancel(event);
