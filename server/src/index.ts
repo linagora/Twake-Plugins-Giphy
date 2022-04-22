@@ -37,7 +37,6 @@ app.post(prefix + "/send", async (req, res) => {
 app.post(prefix + "/hook", async (req, res) => {
   const event = req.body as HookEvent;
   const signature = req.headers["x-twake-signature"];
-  console.log("rpozeopkfzepo : ", signature);
 
   const expectedSignature = crypto
     .createHmac("sha256", config.get("credentials.secret"))
