@@ -1,9 +1,10 @@
 import { v4 as uuidv4 } from "uuid";
 import fetch from "node-fetch";
 import { HookEvent, FrontEvent } from "./types";
-import { getAccessToken, parseJwt } from "./utils";
+import { getAccessToken } from "./utils";
 import { chooseGif, sendGifMessage } from "./messages";
 import config from "config";
+import jwt from "jsonwebtoken";
 
 export const cancel = async (event: any) => {
   const deletedMessage = event.content?.message
@@ -37,22 +38,24 @@ export const cancel = async (event: any) => {
 };
 
 export const sendGif = async (event: FrontEvent) => {
+  const context = jwt.decode(event.context) as FrontEvent;
+
   const msg = {
     subtype: "application",
-    application_id: parseJwt(event.token).application_id,
+    application_id: (jwt.decode(context.token || "") as FrontEvent).id,
     blocks: sendGifMessage(event.url, event.name),
     text: "sent a gif #" + event.name,
-    user_id: event.user_id,
+    user_id: context.user_id,
     context: { allow_delete: "everyone" },
   };
 
-  cancel(event);
+  cancel(context);
 
   await sendMessage(msg, {
-    company_id: event.company_id,
-    workspace_id: event.workspace_id,
-    channel_id: event.channel_id,
-    thread_id: event.thread_id,
+    company_id: context.company_id,
+    workspace_id: context.workspace_id,
+    channel_id: context.channel_id,
+    thread_id: context.thread_id,
   });
 };
 
@@ -73,7 +76,10 @@ export const askGif = async (event: HookEvent) => {
     id: uuidv4(),
     recipient_context_id: event.connection_id,
     command: event.content?.command,
-    token: await getAccessToken(),
+    token: jwt.sign(
+      { id: config.get("credentials.id") },
+      config.get("credentials.secret")
+    ),
   };
 
   const msg = {

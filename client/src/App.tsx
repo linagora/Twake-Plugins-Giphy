@@ -3,7 +3,7 @@ import { GiphyFetch } from "@giphy/js-fetch-api";
 import { useState } from "react";
 import { Input } from "antd";
 import ResizeObserver from "react-resize-observer";
-import "./app.scss";
+import "./App.scss";
 
 const giphyFetch = new GiphyFetch("0MFSt231AIlYRUpzjNsPdQUZPaVKqBPb");
 const urlParamCommand = new URLSearchParams(window.location.search);
@@ -111,7 +111,6 @@ function App() {
     <>
       <GridDemo
         onGifClick={async (gif: any, e: { preventDefault: () => void }) => {
-          console.log("gif", gif);
           e.preventDefault();
           setModalGif(gif);
 
@@ -119,17 +118,8 @@ function App() {
           const body = {
             url: gif.images.downsized_large.url,
             name: gif.title,
-            company_id: urlParams.get("company_id"),
-            workspace_id: urlParams.get("workspace_id"),
-            channel_id: urlParams.get("channel_id"),
-            thread_id: urlParams.get("thread_id"),
-            user_id: urlParams.get("user_id"),
-            user_name: urlParams.get("user_name"),
-            user_icon: urlParams.get("user_icon"),
-            id: urlParams.get("id"),
-            recipient_context_id: urlParams.get("recipient_context_id"),
+            context: urlParams.get("context") || "",
           };
-          console.log("body", body);
 
           await fetch("../send", {
             method: "POST",

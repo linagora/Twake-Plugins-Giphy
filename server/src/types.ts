@@ -29,6 +29,8 @@ export type FrontEvent = {
   user_id: string;
   user_name: string;
   user_icon: string;
+  context: any;
+  token: string;
   id?: string;
   recipient_context_id?: string;
 };
